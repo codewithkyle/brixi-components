@@ -1,0 +1,1 @@
+export function none(o,e,t){return new Promise(n=>{var r,i;let l="auto";if(t){const o=null===(i=null===(r=t.getAttribute("scroll"))||void 0===r?void 0:r.toLowerCase())||void 0===i?void 0:i.trim();"auto"!==o&&"smooth"!==o&&"none"!==o||(l=o)}"none"!==l&&window.scroll({top:0,left:0,behavior:l});document.body.querySelector(o).innerHTML=e,n()})}
