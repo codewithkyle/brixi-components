@@ -282,10 +282,27 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <input-component web-component eager-load-css="input-component">
-    <label for="input-component">Example Input <span class="font-xs font-grey-700">(optional)</span></label>
-    <input type="text" id="input-component" name="example" autocapitalize="off" autocomplete="off" />
-</input-component>
+            <radio-component eager-load-css="radio-component">
+    <input type="radio" name="example" id="option-1" tabindex="0" value="option 1" />
+    <label for="option-1">
+        <i></i>
+        <span>Option 1</span>
+    </label>
+</radio-component>
+<radio-component eager-load-css="radio-component">
+    <input type="radio" name="example" id="option-2" tabindex="0" value="option 2" />
+    <label for="option-2">
+        <i></i>
+        <span>Option 2</span>
+    </label>
+</radio-component>
+<radio-component eager-load-css="radio-component">
+    <input type="radio" name="example" id="option-3" tabindex="0" value="option 3" />
+    <label for="option-3">
+        <i></i>
+        <span>Option 3</span>
+    </label>
+</radio-component>
         </main>
     </article>
     <noscript>
