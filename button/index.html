@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>Brixi Component Library</title>
+    <meta name="description" content="Browse, demo, and download prebuilt web components.">
+
+    <!-- Critical colors -->
+    <style>
+        :root
+        {
+            font-size: 100%;
+
+            --noscript-background: #fff;
+            --loading-bar: #51b1f6;
+            --loading-bar-background: #163b52;
+            --loading-background: #fafafa;
+            --loading-font: #333;
+        }
+        @media (prefers-color-scheme: dark)
+        {
+            :root
+            {
+                --noscript-background: #232323;
+                --loading-bar-background: #163b52;
+                --loading-background: #232323;
+                --loading-font: #fff;
+            }
+        }
+    </style>
+
+    <!-- Loading animations -->
+    <style>
+        page-loading
+        {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column wrap;
+            background-color: var(--loading-background);
+            font-size: var(--text-xl);
+            z-index: 1000000;
+            user-select: none;
+            pointer-events: none;
+            cursor: wait;
+            text-align: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 150ms 150ms ease-in-out;
+        }
+        html[state="hard-loading"] page-loading
+        {
+            visibility: visible;
+            opacity: 1;
+        }
+        page-loading djinnjs-file-loading-message,
+        page-loading djinnjs-file-loading-value
+        {
+            line-height: 1.618;
+            display: inline-block;
+            margin: 0 0.25rem 0.5rem;
+            font-size: var(--text-lg);
+            font-weight: 400;
+            font-family: system-ui, BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            white-space: nowrap;
+            opacity: 0.87;
+            color: var(--loading-font);
+        }
+        page-loading page-loading-bar
+        {
+            width: 200px;
+            height: 2px;
+            position: relative;
+            background-color: var(--loading-bar);
+            overflow: hidden;
+            display: block;
+            box-shadow: inset 0 0 2px rgba(51,51,51,0.15);
+        }
+        page-loading page-loading-bar bar-one
+        {
+            left: -145%;
+            position: absolute;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            animation: primaryBar 2s infinite linear;
+        }
+        page-loading page-loading-bar bar-one::before
+        {
+            content: "";
+            background-color: var(--loading-bar-background);
+            display: inline-block;
+            box-sizing: border-box;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: primaryScale 2s infinite linear;
+        }
+        page-loading page-loading-bar bar-two
+        {
+            left: -100%;
+            position: absolute;
+            width: 100%;
+            box-sizing: border-box;
+            height: 100%;
+            animation: secondaryBar 2s infinite linear;
+        }
+        page-loading page-loading-bar bar-two::before
+        {
+            content: "";
+            background-color: var(--loading-bar-background);
+            display: inline-block;
+            box-sizing: border-box;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: secondaryScale 2s infinite linear;
+        }
+        page-loading resource-counter,
+        page-loading resource-total
+        {
+            display: inline-block;
+        }
+        page-loading span.-slash
+        {
+            font-size:0.75rem;
+            display:inline-block;
+            margin:0 0.25rem;
+            transform:translateY(-2px);
+        }
+        @keyframes primaryBar{
+            0%{
+                transform: translateX(0);
+            }
+            20%{
+                transform: translateX(0);
+                animation-timing-function: cubic-bezier(.5,0,.70173,.49582);
+            }
+            59%{
+                transform: translateX(83.67142%);
+                animation-timing-function: cubic-bezier(.30244,.38135,.55,.95635);
+            }
+            100%{
+                transform: translateX(200.61106%);
+            }
+        }
+        @keyframes secondaryBar{
+            0%{
+                transform: translateX(0);
+                animation-timing-function: cubic-bezier(.15,0,.51506,.40969);
+            }
+            25%{
+                animation-timing-function: cubic-bezier(.31033,.28406,.8,.73371);
+                transform: translateX(37.65191%);
+            }
+            48.35%{
+                animation-timing-function: cubic-bezier(.4,.62704,.6,.90203);
+                transform: translateX(84.38617%);
+            }
+            100%{
+                transform: translateX(160.27778%);
+            }
+        }
+        @keyframes primaryScale{
+            0%{
+                transform: scaleX(.08);
+            }
+            36%{
+                animation-timing-function: cubic-bezier(.33473,.12482,.78584,1);
+                transform: scaleX(.08);
+            }
+            69%{
+                animation-timing-function: cubic-bezier(.06,.11,.6,1);
+                transform: scaleX(.66148);
+            }
+            100%{
+                transform: scaleX(.08);
+            }
+        }
+        @keyframes secondaryScale{
+            0%{
+                animation-timing-function: cubic-bezier(.20503,.05705,.57661,.45397);
+                transform: scaleX(.08);
+            }
+            19%{
+                animation-timing-function: cubic-bezier(.15231,.19643,.64837,1.00432);
+                transform: scaleX(.4571);
+            }
+            44%{
+                animation-timing-function: cubic-bezier(.25776,-.00316,.21176,1.38179);
+                transform: scaleX(.72796);
+            }
+            100%{
+                transform: scaleX(.08);
+            }
+        }
+    </style>
+
+    <!-- noscript CSS -->
+    <noscript>
+        <style>	
+            page-loading {
+                display: none;
+            }
+            #noscript-message {
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 1rem 1rem 1rem;
+                background-color: var(--noscript-background);
+                box-shadow: 0 -2px 16px rgba(51,51,51,0.1), -6px 32px rgba(51,51,51,0.1);
+                border-radius: 0.25rem 0.25rem 0 0;
+                text-align: center;
+                z-index: 2000;
+            }
+        </style>
+        <link rel="stylesheet" href="/assets/noscript.css">
+    </noscript>
+
+    <!-- Web Components polyfill for Edge -->
+    <script>
+        if (/Edge/.test(navigator.userAgent)) {
+            document.write('<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.0/webcomponents-bundle.js"><\/script>');
+        }
+    </script>
+
+    <script type="module" src="/assets/runtime.mjs"></script>
+</head>
+<body style="width:100vw;overflow-x:hidden;display:block;">
+    <page-loading>
+        <div>
+            <djinnjs-file-loading-message>Loading page</djinnjs-file-loading-message>
+            <djinnjs-file-loading-value></djinnjs-file-loading-value>
+            <page-loading-bar>
+                <bar-one></bar-one>
+                <bar-two></bar-two>
+            </page-loading-bar>
+        </div>
+    </page-loading>
+    <soft-loading>
+        <transition-bar-one></transition-bar-one>
+        <transition-bar-two></transition-bar-two>
+    </soft-loading>
+    <page-transition>
+        <page-transition-bar></page-transition-bar>
+    </page-transition>
+    <aside id="primary-nav">
+        <nav>
+            <a href="/button">button</a><a href="/checkbox">checkbox</a><dropdown-component>
+                        <input type="checkbox" id="inputs" />
+                        <label for="inputs">
+                            inputs
+                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                        </label>
+                    <ul><li>
+                            <a href="/inputs/email">email</a>
+                        </li><li>
+                            <a href="/inputs/password">password</a>
+                        </li><li>
+                            <a href="/inputs/text">text</a>
+                        </li></ul></dropdown-component><a href="/lightswitch">lightswitch</a><a href="/radio">radio</a><a href="/select">select</a><a href="/snackbar">snackbar</a><dropdown-component>
+                        <input type="checkbox" id="spinners" />
+                        <label for="spinners">
+                            spinners
+                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                        </label>
+                    <ul><li>
+                            <a href="/spinners/circle-rail">circle rail</a>
+                        </li><li>
+                            <a href="/spinners/inline-svg">inline svg</a>
+                        </li></ul></dropdown-component><a href="/toaster">toaster</a><a href="/tooltip">tooltip</a>
+        </nav>
+    </aside>
+    <article id="content" eager-load-css="normalize layout brixi">
+        <main>
+            <div eager-load-css="buttons" style="display: grid;gap:0.5rem;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">
+    <!-- Solid -->
+    <button class="button -solid -primary">Example Button</button>
+    <button class="button -solid -black">Example Button</button>
+    <button class="button -solid -white">Example Button</button>
+    <button class="button -solid -success">Example Button</button>
+    <button class="button -solid -warning">Example Button</button>
+    <button class="button -solid -danger">Example Button</button>
+
+    <!-- Solid Raised Rounded -->
+    <button class="button -solid -raised -rounded -primary">Example Button</button>
+    <button class="button -solid -raised -rounded -black">Example Button</button>
+    <button class="button -solid -raised -rounded -white">Example Button</button>
+    <button class="button -solid -raised -rounded -success">Example Button</button>
+    <button class="button -solid -raised -rounded -warning">Example Button</button>
+    <button class="button -solid -raised -rounded -danger">Example Button</button>
+
+    <!-- Solid Pill -->
+    <button class="button -solid -pill -primary">Example Button</button>
+    <button class="button -solid -pill -black">Example Button</button>
+    <button class="button -solid -pill -raised -white">Example Button</button>
+    <button class="button -solid -pill -success">Example Button</button>
+    <button class="button -solid -pill -warning">Example Button</button>
+    <button class="button -solid -pill -danger">Example Button</button>
+
+    <!-- Outline Rounded -->
+    <button class="button -outline -rounded -primary">Example Button</button>
+    <button class="button -outline -rounded -black">Example Button</button>
+    <button class="button -outline -rounded -white">Example Button</button>
+    <button class="button -outline -rounded -success">Example Button</button>
+    <button class="button -outline -rounded -warning">Example Button</button>
+    <button class="button -outline -rounded -danger">Example Button</button>
+
+    <!-- Text Rounded -->
+    <button class="button -text -rounded -primary">Example Button</button>
+    <button class="button -text -rounded -black">Example Button</button>
+    <button class="button -text -rounded -white">Example Button</button>
+    <button class="button -text -rounded -success">Example Button</button>
+    <button class="button -text -rounded -warning">Example Button</button>
+    <button class="button -text -rounded -danger">Example Button</button>
+
+    <!-- Solid Rounded with Icon -->
+    <button class="button -solid -rounded -primary -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+    <button class="button -solid -rounded -black -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+    <button class="button -solid -rounded -white -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+    <button class="button -solid -rounded -success -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+    <button class="button -solid -rounded -warning -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+    <button class="button -solid -rounded -danger -icon">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"></path></svg>
+        </i>
+        Example Button
+    </button>
+
+    <!-- Solid Rounded Icon Only -->
+    <button class="button -solid -rounded -primary -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -rounded -black -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -rounded -white -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -rounded -success -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -rounded -warning -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -rounded -danger -icon-only">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M12.41 276.3l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40L266.65 130.72a25.682 25.682 0 0 0-21.29 0L12.41 236.3c-16.55 7.5-16.55 32.5 0 40zM304 64h192c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H304c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 300.1l-58.09-26.33-161.63 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 337.77l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg>
+        </i>
+    </button>
+
+    <!-- Solid Rounded Icon Only Tall Round -->
+    <button class="button -solid -round -primary -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -round -black -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -round -white -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -round -success -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -round -warning -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+    <button class="button -solid -round -danger -icon-only -tall">
+        <i>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M304 144h64v64c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16v-64h64c8.84 0 16-7.16 16-16V96c0-8.84-7.16-16-16-16h-64V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v64h-64c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16zm195.59 220.1l-58.54-26.53-161.19 73.06c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.95 337.57 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40zM12.41 275.9l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L448 299.28V280.7c-15.32 4.38-31.27 7.29-48 7.29-88.01 0-160.72-64.67-173.72-149.04L12.41 235.9c-16.55 7.5-16.55 32.5 0 40z"></path></svg>
+        </i>
+    </button>
+
+    <!-- Solid Disabled -->
+    <button disabled class="button -solid -primary">Example Button</button>
+    <button disabled class="button -solid -black">Example Button</button>
+    <button disabled class="button -solid -white">Example Button</button>
+    <button disabled class="button -solid -success">Example Button</button>
+    <button disabled class="button -solid -warning">Example Button</button>
+    <button disabled class="button -solid -danger">Example Button</button>
+</div>
+        </main>
+    </article>
+    <noscript>
+        <p id="noscript-message">Parts of this website require JavaScript. Please re-enable JavaScript and reload the page. We apologize for the inconvenience.</p>
+    </noscript>
+    <div class="global-buttons">
+        <a href="https://github.com/codewithkyle/brixi-components">
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+            View On Github
+        </a>
+        <github-download-component role="button" tabindex="0" web-component>
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 288h-92.1l46.1-46.1c30.1-30.1 8.8-81.9-33.9-81.9h-64V48c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v112h-64c-42.6 0-64.2 51.7-33.9 81.9l46.1 46.1H48c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V336c0-26.5-21.5-48-48-48zm-400-80h112V48h96v160h112L288 368 128 208zm400 256H48V336h140.1l65.9 65.9c18.8 18.8 49.1 18.7 67.9 0l65.9-65.9H528v128zm-88-64c0-13.3 10.7-24 24-24s24 10.7 24 24-10.7 24-24 24-24-10.7-24-24z"></path></svg>
+            Download Component
+        </github-download-component>
+        <a href="https://github.com/codewithkyle/brixi/wiki">
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128 152v-32c0-4.4 3.6-8 8-8h208c4.4 0 8 3.6 8 8v32c0 4.4-3.6 8-8 8H136c-4.4 0-8-3.6-8-8zm8 88h208c4.4 0 8-3.6 8-8v-32c0-4.4-3.6-8-8-8H136c-4.4 0-8 3.6-8 8v32c0 4.4 3.6 8 8 8zm299.1 159.7c-4.2 13-4.2 51.6 0 64.6 7.3 1.4 12.9 7.9 12.9 15.7v16c0 8.8-7.2 16-16 16H80c-44.2 0-80-35.8-80-80V80C0 35.8 35.8 0 80 0h352c8.8 0 16 7.2 16 16v368c0 7.8-5.5 14.2-12.9 15.7zm-41.1.3H80c-17.6 0-32 14.4-32 32 0 17.7 14.3 32 32 32h314c-2.7-17.3-2.7-46.7 0-64zm6-352H80c-17.7 0-32 14.3-32 32v278.7c9.8-4.3 20.6-6.7 32-6.7h320V48z"></path></svg>
+            Brixi Documentation
+        </a>
+        <a href="https://github.com/pageworks/djinnjs">
+            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M624 352h-48V64c0-35.2-28.8-64-64-64H128C92.8 0 64 28.8 64 64v288H16c-8.8 0-16 7.2-16 16v48c0 52.8 43.2 96 96 96h448c52.8 0 96-43.2 96-96v-48c0-8.8-7.2-16-16-16zM112 64c0-8.67 7.33-16 16-16h384c8.67 0 16 7.33 16 16v288H112V64zm480 352c0 26.47-21.53 48-48 48H96c-26.47 0-48-21.53-48-48v-16h180.9c5.57 9.39 15.38 16 27.1 16h128c11.72 0 21.52-6.61 27.1-16H592v16zM277.66 261.65l11.31-11.31c6.25-6.25 6.25-16.38 0-22.63L253.25 192l35.71-35.72c6.25-6.25 6.25-16.38 0-22.63l-11.31-11.31c-6.25-6.25-16.38-6.25-22.63 0l-58.34 58.34c-6.25 6.25-6.25 16.38 0 22.63l58.34 58.34c6.25 6.25 16.39 6.25 22.64 0zm73.38-11.3l11.31 11.31c6.25 6.25 16.38 6.25 22.63 0l58.34-58.34c6.25-6.25 6.25-16.38 0-22.63l-58.34-58.34c-6.25-6.25-16.38-6.25-22.63 0l-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63L386.75 192l-35.71 35.72c-6.25 6.25-6.25 16.38 0 22.63z"></path></svg>
+            DjinnJS
+        </a>
+    </div>
+</body>
+</html>
