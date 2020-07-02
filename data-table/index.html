@@ -296,7 +296,8 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <data-table web-component eager-load-css="data-table table" style="width: 640px;max-width: 100%;">
+            <view-wrapper id="data-table">
+                <data-table web-component eager-load-css="data-table table" style="width: 640px;max-width: 100%;">
     <table class="table">
         <thead>
             <tr>
@@ -348,6 +349,7 @@
     </table>
     <empty-message></empty-message>
 </data-table>
+            </view-wrapper>
         </main>
     </article>
     <noscript>

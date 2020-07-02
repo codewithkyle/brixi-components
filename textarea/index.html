@@ -296,7 +296,8 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <div style="width: 420px;max-width: 100%;" grid="columns 1 gap-1.5">
+            <view-wrapper id="textarea">
+                <div style="width: 420px;max-width: 100%;" grid="columns 1 gap-1.5">
     <textarea-component web-component eager-load-css="textarea-component">
         <label for="textarea-component">
             Example Textarea
@@ -315,6 +316,7 @@
         <helper-text role="tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</helper-text>
     </textarea-component>
 </div>
+            </view-wrapper>
         </main>
     </article>
     <noscript>

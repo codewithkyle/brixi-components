@@ -296,10 +296,12 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <phone-component web-component eager-load-css="phone-component">
+            <view-wrapper id="phone">
+                <phone-component web-component eager-load-css="phone-component">
     <label for="phone-component">Phone Number</label>
     <input type="tel" id="phone-component" name="example" required autocapitalize="off" autocomplete="tel" />
 </phone-component>
+            </view-wrapper>
         </main>
     </article>
     <noscript>

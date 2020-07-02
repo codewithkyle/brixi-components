@@ -296,10 +296,12 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <date-picker web-component eager-load-css="date-picker flatpickr">
+            <view-wrapper id="date-picker">
+                <date-picker web-component eager-load-css="date-picker flatpickr">
     <label for="date-picker">Birthday</label>
     <input type="text" id="date-picker" name="example" autocapitalize="off" autocomplete="off" required />
 </date-picker>
+            </view-wrapper>
         </main>
     </article>
     <noscript>

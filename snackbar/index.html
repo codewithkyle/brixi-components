@@ -296,7 +296,8 @@
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <snackbar-component eager-load-css="snackbar-component">
+            <view-wrapper id="snackbar">
+                <snackbar-component eager-load-css="snackbar-component">
     <p>Custom notification message.</p>
     <snackbar-actions>
         <button>Action</button>
@@ -305,6 +306,7 @@
         </close-button>
     </snackbar-actions>
 </snackbar-component>
+            </view-wrapper>
         </main>
     </article>
     <noscript>
