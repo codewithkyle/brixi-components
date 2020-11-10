@@ -1,1 +1,0 @@
-export function setupGoogleAnalytics(a){function e(){dataLayer.push(arguments)}a&&(window.dataLayer=window.dataLayer||[],e("js",new Date),e("config",a))}export function sendPageView(a,e){a&&e&&gtag("config",e,{page_path:a})}
