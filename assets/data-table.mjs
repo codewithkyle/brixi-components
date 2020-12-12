@@ -1,14 +1,14 @@
-import{html as t,render as e}from"https://unpkg.com/lit-html?module";import{Component as s}from"./component.mjs";export default class a extends s{constructor(){super(),this.foot=this.querySelector("tfoot"),this.body=this.querySelector("tbody"),this.emptyMessage=this.querySelector("empty-message"),this.state={rowsPerPage:3,page:0,totalPages:0,rows:[]}}async fetchData(){const t=await fetch(location.origin+"/api/v1/data-table.json",{method:"GET",credentials:"include",headers:new Headers({Accept:"application/json"})});if(t.ok){const e=await t.json();if(e.success)this.setState({rows:e.data,totalPages:Math.ceil(e.data.length/this.state.rowsPerPage)});else{(null==e?void 0:e.message)||(null==e||e.error)}}}next(){const t={...this.state};t.page++,t.page>this.state.totalPages-1&&(t.page=this.state.totalPages-1),this.setState(t)}back(){const t={...this.state};t.page--,t.page<0&&(t.page=0),this.setState(t)}connected(){this.fetchData()}render(){if(this.state.rows.length){this.body.style.display="block",this.emptyMessage.style.display="none";const s=this.state.rows.slice(this.state.page*this.state.rowsPerPage,this.state.page*this.state.rowsPerPage+this.state.rowsPerPage),a=t`
+import{html as t,render as e}from"https://unpkg.com/lit-html?module";import{Component as s}from"./component.mjs";export default class a extends s{constructor(){super(),this.foot=null,this.body=this.querySelector("tbody"),this.emptyMessage=null,this.state={rowsPerPage:3,page:0,totalPages:0,rows:[]}}async fetchData(){const t=await fetch(location.origin+"/api/v1/data-table.json",{method:"GET",credentials:"include",headers:new Headers({Accept:"application/json"})});if(t.ok){const e=await t.json();if(e.success)this.setState({rows:e.data,totalPages:Math.ceil(e.data.length/this.state.rowsPerPage)});else{(null==e?void 0:e.message)||(null==e||e.error)}}}next(){const t={...this.state};t.page++,t.page>this.state.totalPages-1&&(t.page=this.state.totalPages-1),this.setState(t)}back(){const t={...this.state};t.page--,t.page<0&&(t.page=0),this.setState(t)}connected(){this.fetchData()}render(){if(this.state.rows.length){this.body.style.display="block",this.emptyMessage&&(this.emptyMessage.remove(),this.emptyMessage=null);const s=this.state.rows.slice(this.state.page*this.state.rowsPerPage,this.state.page*this.state.rowsPerPage+this.state.rowsPerPage),a=t`
                 ${s.map(e=>t`
                         <tr>
                             ${Object.values(e).map(e=>t`<td>${e}</td>`)}
                         </tr>
                     `)}
-            `;if(e(a,this.body),this.state.totalPages>1){this.foot.style.display="block";const s=t`
+            `;if(e(a,this.body),this.state.totalPages>1){this.foot||(this.foot=document.createElement("tfoot"),this.body.insertAdjacentElement("afterend",this.foot)),this.foot.style.display="block";const s=t`
                     <tr>
                         <td>Page ${this.state.page+1} of ${this.state.totalPages}</td>
                         <td>
-                            <button @click=${t=>this.back()} ?disabled=${0===this.state.page}>
+                            <button @click=${()=>this.back()} ?disabled=${0===this.state.page}>
                                 <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                     <path
                                         fill="currentColor"
@@ -18,7 +18,7 @@ import{html as t,render as e}from"https://unpkg.com/lit-html?module";import{Comp
                             </button>
                         </td>
                         <td>
-                            <button @click=${t=>this.next()} ?disabled=${this.state.page===this.state.totalPages-1}>
+                            <button @click=${()=>this.next()} ?disabled=${this.state.page===this.state.totalPages-1}>
                                 <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                     <path
                                         fill="currentColor"
@@ -28,4 +28,4 @@ import{html as t,render as e}from"https://unpkg.com/lit-html?module";import{Comp
                             </button>
                         </td>
                     </tr>
-                `;e(s,this.foot)}}else this.foot.style.display="none",this.body.style.display="none",this.emptyMessage.innerText="Failed to load. Try refreshing the page.",this.emptyMessage.style.display="block"}}
+                `;e(s,this.foot)}}else this.foot&&(this.foot.style.display="none"),this.body.style.display="none",this.emptyMessage||(this.emptyMessage=document.createElement("empty-message"),this.emptyMessage.innerText="Failed to load. Try refreshing the page.",this.appendChild(this.emptyMessage)),this.emptyMessage.style.display="block"}}
