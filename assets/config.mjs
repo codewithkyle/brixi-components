@@ -1,1 +1,0 @@
-export const djinnjsOutDir="assets";export const minimumConnection="slow-2g";

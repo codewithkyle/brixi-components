@@ -1,1 +1,0 @@
-export class Component extends HTMLElement{constructor(){super()}setState(e){this.state=Object.assign(this.state,e),this.updated(),this.render()}render(){}connected(){}disconnected(){}updated(){}connectedCallback(){this.connected()}disconnectedCallback(){this.disconnected()}}
