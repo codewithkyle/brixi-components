@@ -20,8 +20,7 @@
         });
     </script>
 
-    <style>input-component{display:inline-block;width:100%;position:relative}input-component[state=invalid] label{color:var(--danger-700)!important}input-component[state=invalid] input{border-color:var(--danger-400);background-color:var(--danger-100)}input-component[state=invalid] input:hover{border-color:var(--danger-500)}input-component[state=invalid] input:focus{border-color:var(--danger-500);box-shadow:0 0 0 5px var(--danger-100)}input-component[state=invalid] input::placeholder{color:var(--danger-700)}input-component[state=invalid] i{color:var(--danger-700)}input-component label{display:block;width:100%;font-size:var(--font-sm);font-weight:var(--font-medium);color:var(--grey-800);margin-bottom:.5rem}input-component input{height:48px;display:block;width:100%;text-overflow:ellipsis;overflow:hidden;line-height:48px;padding:0 1rem;background-color:var(--grey-100);border:1px solid var(--grey-300);border-radius:.25rem;color:var(--grey-900);transition:all 150ms var(--ease-in-out)}input-component input::placeholder{color:var(--grey-700)}input-component input:hover{border-color:var(--primary-400)}input-component input:focus{border-color:var(--primary-400);box-shadow:0 0 0 5px var(--primary-100);background-color:var(--white)}input-component input.has-icon{padding-left:calc(24px + 1rem)}input-component p{display:block;margin-bottom:.5rem;font-size:var(--font-xs);color:var(--grey-700);line-height:1.375}input-component p.error{color:var(--danger-700)}input-component i{display:inline-flex;justify-content:center;align-items:center;width:24px;height:24px;pointer-events:none;position:absolute;bottom:calc((48px - 24px)/ 2);left:.5rem;color:var(--grey-700)}input-component i svg{width:18px;height:18px}
-input-component{display:inline-block;width:100%;position:relative}input-component[state=invalid] label{color:var(--danger-700)!important}input-component[state=invalid] input{border-color:var(--danger-400);background-color:var(--danger-100)}input-component[state=invalid] input:hover{border-color:var(--danger-500)}input-component[state=invalid] input:focus{border-color:var(--danger-500);box-shadow:0 0 0 5px var(--danger-100)}input-component[state=invalid] input::placeholder{color:var(--danger-700)}input-component[state=invalid] i{color:var(--danger-700)}input-component label{display:block;width:100%;font-size:var(--font-sm);font-weight:var(--font-medium);color:var(--grey-800);margin-bottom:.5rem}input-component input{height:48px;display:block;width:100%;text-overflow:ellipsis;overflow:hidden;line-height:48px;padding:0 1rem;background-color:var(--grey-100);border:1px solid var(--grey-300);border-radius:.25rem;color:var(--grey-900);transition:all 150ms var(--ease-in-out)}input-component input::placeholder{color:var(--grey-700)}input-component input:hover{border-color:var(--primary-400)}input-component input:focus{border-color:var(--primary-400);box-shadow:0 0 0 5px var(--primary-100);background-color:var(--white)}input-component input.has-icon{padding-left:calc(24px + 1rem)}input-component p{display:block;margin-bottom:.5rem;font-size:var(--font-xs);color:var(--grey-700);line-height:1.375}input-component p.error{color:var(--danger-700)}input-component i{display:inline-flex;justify-content:center;align-items:center;width:24px;height:24px;pointer-events:none;position:absolute;bottom:calc((48px - 24px)/ 2);left:.5rem;color:var(--grey-700)}input-component i svg{width:18px;height:18px}
+    <style>.chip{height:32px;white-space:nowrap;display:inline-flex;justify-content:center;align-items:center;padding:0 .75rem;border-radius:16px;font-weight:var(--font-medium);font-size:var(--font-xs);border-width:1px;border-style:solid;border-color:transparent;background-color:transparent;color:var(--grey-700);position:relative;transition:all 150ms var(--ease-in-out)}.chip::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:all 75ms var(--ease-in-out);border-radius:16px}.chip:active,.chip:focus-visible,.chip:hover{color:var(--grey-800)}.chip[kind=solid]{background-color:var(--grey-200);border-color:var(--grey-300)}.chip[kind=solid]:focus-visible,.chip[kind=solid]:hover{background-color:var(--grey-100)}.chip[kind=solid]:active{background-color:var(--grey-200)}.chip[kind=outline]{border-color:var(--grey-300)}.chip[kind=outline]::before{background-color:var(--grey-500)}.chip[kind=outline]:focus-visible::before,.chip[kind=outline]:hover::before{opacity:.1}.chip[kind=outline]:active::before{opacity:.2}.chip[icon]{padding-left:.5rem}.chip[icon] i:first-of-type{width:24px;height:24px;display:inline-flex;justify-content:center;align-items:center;margin-right:.25rem}.chip[icon] i:first-of-type svg{width:16px;height:16px}.chip[closeable]{padding-right:.25rem}.chip[closeable] i:last-of-type{width:24px;height:24px;display:inline-flex;justify-content:center;align-items:center;margin-left:.25rem}.chip[closeable] i:last-of-type svg{width:18px;height:18px}.chip[closeable] i:last-of-type svg:hover{color:var(--grey-900)}
 </style>
     
 </head>
@@ -75,25 +74,69 @@ input-component{display:inline-block;width:100%;position:relative}input-componen
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <view-wrapper id="text">
-                <div class="block mb-1.5 max-w-full" style="width: 400px;">
-    <input-component web-component css="input-component">
-        <label for="input-component-2">Full Name</label>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <input type="text" id="input-component-2" name="example2" autocapitalize="off" autocomplete="name" required />
-    </input-component>
-</div>
-<div class="block">
-    <input-component web-component css="input-component">
-        <label for="input-component">
-            Example Input 
-            <span class="font-xs font-grey-700">(optional)</span>
-        </label>
-        <input class="has-icon" type="text" id="input-component" name="example" autocapitalize="off" autocomplete="off" />
+            <view-wrapper id="chips">
+                <div css="chips" style="display: grid;gap:0.5rem;grid-template-columns: repeat(auto-fill, minmax(0px, 128px));place-items: center;">
+    <button class="chip" kind="outline">Nature</button>
+    <button class="chip" kind="outline" icon>
         <i>
-            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="credit-card" class="svg-inline--fa fa-credit-card fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM48 64h480c8.8 0 16 7.2 16 16v48H32V80c0-8.8 7.2-16 16-16zm480 384H48c-8.8 0-16-7.2-16-16V224h512v208c0 8.8-7.2 16-16 16zm-336-84v8c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v8c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+            </svg>
         </i>
-    </input-component>
+        Nature
+    </button>
+    <button class="chip" kind="outline" closeable>
+        Nature
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+        </i>
+    </button>
+    <button class="chip" kind="outline" closeable icon>
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </i>
+        Nature
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+        </i>
+    </button>
+    
+    <button class="chip" kind="solid">Nature</button>
+    <button class="chip" kind="solid" icon>
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+            </svg>
+        </i>
+        Nature
+    </button>
+    <button class="chip" kind="solid" closeable>
+        Nature
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+        </i>
+    </button>
+    <button class="chip" kind="solid" closeable icon>
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </i>
+        Nature
+        <i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+        </i>
+    </button>
 </div>
             </view-wrapper>
         </main>

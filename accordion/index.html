@@ -20,8 +20,7 @@
         });
     </script>
 
-    <style>input-component{display:inline-block;width:100%;position:relative}input-component[state=invalid] label{color:var(--danger-700)!important}input-component[state=invalid] input{border-color:var(--danger-400);background-color:var(--danger-100)}input-component[state=invalid] input:hover{border-color:var(--danger-500)}input-component[state=invalid] input:focus{border-color:var(--danger-500);box-shadow:0 0 0 5px var(--danger-100)}input-component[state=invalid] input::placeholder{color:var(--danger-700)}input-component[state=invalid] i{color:var(--danger-700)}input-component label{display:block;width:100%;font-size:var(--font-sm);font-weight:var(--font-medium);color:var(--grey-800);margin-bottom:.5rem}input-component input{height:48px;display:block;width:100%;text-overflow:ellipsis;overflow:hidden;line-height:48px;padding:0 1rem;background-color:var(--grey-100);border:1px solid var(--grey-300);border-radius:.25rem;color:var(--grey-900);transition:all 150ms var(--ease-in-out)}input-component input::placeholder{color:var(--grey-700)}input-component input:hover{border-color:var(--primary-400)}input-component input:focus{border-color:var(--primary-400);box-shadow:0 0 0 5px var(--primary-100);background-color:var(--white)}input-component input.has-icon{padding-left:calc(24px + 1rem)}input-component p{display:block;margin-bottom:.5rem;font-size:var(--font-xs);color:var(--grey-700);line-height:1.375}input-component p.error{color:var(--danger-700)}input-component i{display:inline-flex;justify-content:center;align-items:center;width:24px;height:24px;pointer-events:none;position:absolute;bottom:calc((48px - 24px)/ 2);left:.5rem;color:var(--grey-700)}input-component i svg{width:18px;height:18px}
-input-component{display:inline-block;width:100%;position:relative}input-component[state=invalid] label{color:var(--danger-700)!important}input-component[state=invalid] input{border-color:var(--danger-400);background-color:var(--danger-100)}input-component[state=invalid] input:hover{border-color:var(--danger-500)}input-component[state=invalid] input:focus{border-color:var(--danger-500);box-shadow:0 0 0 5px var(--danger-100)}input-component[state=invalid] input::placeholder{color:var(--danger-700)}input-component[state=invalid] i{color:var(--danger-700)}input-component label{display:block;width:100%;font-size:var(--font-sm);font-weight:var(--font-medium);color:var(--grey-800);margin-bottom:.5rem}input-component input{height:48px;display:block;width:100%;text-overflow:ellipsis;overflow:hidden;line-height:48px;padding:0 1rem;background-color:var(--grey-100);border:1px solid var(--grey-300);border-radius:.25rem;color:var(--grey-900);transition:all 150ms var(--ease-in-out)}input-component input::placeholder{color:var(--grey-700)}input-component input:hover{border-color:var(--primary-400)}input-component input:focus{border-color:var(--primary-400);box-shadow:0 0 0 5px var(--primary-100);background-color:var(--white)}input-component input.has-icon{padding-left:calc(24px + 1rem)}input-component p{display:block;margin-bottom:.5rem;font-size:var(--font-xs);color:var(--grey-700);line-height:1.375}input-component p.error{color:var(--danger-700)}input-component i{display:inline-flex;justify-content:center;align-items:center;width:24px;height:24px;pointer-events:none;position:absolute;bottom:calc((48px - 24px)/ 2);left:.5rem;color:var(--grey-700)}input-component i svg{width:18px;height:18px}
+    <style>accordion-component{display:block;width:100%;position:relative}accordion-component label{height:48px;padding:0 1rem;width:100%;display:inline-flex;justify-content:space-between;align-items:center;flex-flow:row nowrap;color:var(--grey-700);cursor:pointer;transition:all 150ms var(--ease-in-out);border-radius:.5rem;border-style:solid;border-width:1px;border-color:transparent}accordion-component label::before{content:"";display:inline-block;width:100%;height:100%;position:absolute;top:0;left:0;transition:all 75ms var(--ease-in-out);background-color:var(--grey-500);opacity:0;border-radius:.5rem}accordion-component label:focus-visible,accordion-component label:hover{color:var(--grey-800);border-color:var(--grey-400)}accordion-component label:focus-visible::before,accordion-component label:hover::before{opacity:.1}accordion-component label:active{color:var(--grey-800)}accordion-component label:active::before{opacity:.2}accordion-component label svg{transition:all .3s var(--ease-in-out)}accordion-component input{position:absolute;opacity:0;width:0;height:0;top:0;left:0}accordion-component input:focus-visible+label{color:var(--grey-800)}accordion-component input:focus-visible+label::before{opacity:.1}accordion-component input:checked+label{border-color:var(--grey-300);border-radius:.5rem .5rem 0 0}accordion-component input:checked+label::before{border-radius:.5rem .5rem 0 0}accordion-component input:checked+label svg{transform:rotate(180deg)}accordion-component input:checked~accordion-content{height:auto;visibility:visible;border-color:var(--grey-300)}accordion-component accordion-content{width:100%;display:block;position:relative;height:0;overflow:hidden;visibility:hidden;border-radius:0 0 .5rem .5rem;border-style:solid;border-width:0 1px 1px 1px;border-color:transparent}
 </style>
     
 </head>
@@ -75,25 +74,30 @@ input-component{display:inline-block;width:100%;position:relative}input-componen
     </aside>
     <article id="content" eager-load-css="normalize layout brixi">
         <main>
-            <view-wrapper id="text">
-                <div class="block mb-1.5 max-w-full" style="width: 400px;">
-    <input-component web-component css="input-component">
-        <label for="input-component-2">Full Name</label>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <input type="text" id="input-component-2" name="example2" autocapitalize="off" autocomplete="name" required />
-    </input-component>
-</div>
-<div class="block">
-    <input-component web-component css="input-component">
-        <label for="input-component">
-            Example Input 
-            <span class="font-xs font-grey-700">(optional)</span>
+            <view-wrapper id="accordion">
+                <div css="accordion" style="max-width: 768px;">
+    <accordion-component>
+        <input type="checkbox" id="example" tabindex="0" aria-label="open example accordion">
+        <label for="example">
+            <span class="font-lg font-medium font-grey-800 text-none">Example</span>
+            <svg style="width: 18px;height:18px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+            </svg>
         </label>
-        <input class="has-icon" type="text" id="input-component" name="example" autocapitalize="off" autocomplete="off" />
-        <i>
-            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="credit-card" class="svg-inline--fa fa-credit-card fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM48 64h480c8.8 0 16 7.2 16 16v48H32V80c0-8.8 7.2-16 16-16zm480 384H48c-8.8 0-16-7.2-16-16V224h512v208c0 8.8-7.2 16-16 16zm-336-84v8c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v8c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"></path></svg>
-        </i>
-    </input-component>
+        <accordion-content>
+            <dl class="p-0.5">
+                <dt class="block font-medium font-grey-800 mb-0.25 line-normal">Lorem ipsum?</dt>
+                <dd class="block font-grey-700 line-normal font-sm mb-1">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </dd>
+
+                <dt class="block font-medium font-grey-800 mb-0.25 line-normal">Lorem ipsum?</dt>
+                <dd class="block font-grey-700 line-normal font-sm">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.    
+                </dd>
+            </dl>
+        </accordion-content>
+    </accordion-component>
 </div>
             </view-wrapper>
         </main>
